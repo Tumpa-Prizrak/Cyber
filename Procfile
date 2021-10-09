@@ -1,0 +1,1 @@
+worker: python main.py && python messages.py
