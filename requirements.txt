@@ -27,7 +27,6 @@ pyinstaller==4.3
 pyinstaller-hooks-contrib==2021.1
 PyNaCl==1.4.0
 pypresence==4.2.0
-pywin32==301
 pywin32-ctypes==0.2.0
 requests==2.26.0
 setuptools==56.0.0
