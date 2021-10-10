@@ -977,32 +977,29 @@ async def code(ctx, *, code: str):
         else:
             in_code += i
             in_code += "\n"
-        """elif i.startswith("print"):
-            value = list(str.split(i, "(")[1:][0])
-            out = ""
-            for i in value[:-1]:
-                out += i
-
-            try:
-                await ctx.send(eval(out))
-            except Exception as e:
-                await ctx.send(e)
-        elif i.startswith("input"):
-            try:
-                raise ValueError("Данная команда запрещена")
-            except Exception as e:
-                await ctx.send(e)
-        else:
-            try:
-                await ctx.send(str(exec(i)))
-            except Exception as e:
-                await ctx.send(e)"""
     
     try:
         exec(in_code)
     except Exception as e:
         await ctx.send(e)
 
+
+@bot.command()
+@commands.has_permissions(kick_members=True)
+async def kick(ctx, man: discord.Member, *, reason: str = ""):
+    await man.kick(reason=reason)
+    emb = discord.Embed(title=f"\"{man.display_name}\" Был кикнут", colour=discord.colour.Color.green())
+    await ctx.send(embed=emb)
+CommandToHelp(kick, "Кикнуть [user]", "Модерирование:")
+
+
+@bot.command()
+@commands.has_permissions(kick_members=True)
+async def ban(ctx, man: discord.Member, *, reason: str = ""):
+    await man.ban(reason=reason)
+    emb = discord.Embed(title=f"\"{man.display_name}\" был забанен", colour=discord.colour.Color.green())
+    await ctx.send(embed=emb)
+CommandToHelp(ban, "Забанить [user]", "Модерирование:")
 
 
 bot.run(c.tocen)
