@@ -11,6 +11,8 @@ bot = commands.Bot(command_prefix=c.BotToken, intents=discord.Intents.all(), cas
 bot.remove_command("help")
 bot.load_extension("other")
 bot.load_extension("reactions")
+bot.load_extension("moderation")
+bot.load_extension("economy")
 # slash = InteractionClient(bot)
 conn = sqlite3.connect("mydb.db")
 curor = conn.cursor()
