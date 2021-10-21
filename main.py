@@ -20,7 +20,10 @@ for i in os.listdir("Cogs"):
 @bot.event
 async def on_ready():
     await bot.change_presence(status=discord.Status.dnd, activity=discord.Streaming(name="!help",
-        platform="Twitch", details=f"{c.BotToken}help", game="Create bot", url="https://www.twitch.tv/andrew_k9"))
+            platform="Twitch",
+            details=f"{c.BotToken}help",
+            game="Create bot",
+            url="https://www.twitch.tv/andrew_k9"))
     print("Ready")
 
 
@@ -37,7 +40,7 @@ async def code(ctx, *, code: str):
         else:
             in_code += i
             in_code += "\n"
-    
+
     try:
         exec(in_code)
     except Exception as e:
