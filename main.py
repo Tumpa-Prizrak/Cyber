@@ -1,19 +1,20 @@
 import discord
 from discord.ext import commands
 import sqlite3
-import config as c
-import json
-import requests
-from random import randint, randrange
-import datetime
+from Cogs import config as c
+import os
 
 bot = commands.Bot(command_prefix=c.BotToken, intents=discord.Intents.all(), case_insensitive=True)
 bot.remove_command("help")
-bot.load_extension("other")
-bot.load_extension("reactions")
 # slash = InteractionClient(bot)
-conn = sqlite3.connect("mydb.db")
+conn = sqlite3.connect("Cogs/mydb.db")
 curor = conn.cursor()
+for i in os.listdir("Cogs"):
+    try:
+        if i.endswith(".py"):
+            bot.load_extension("Cogs." + i[:-3])
+    except discord.ext.commands.errors.NoEntryPointError:
+        continue
 
 
 @bot.event

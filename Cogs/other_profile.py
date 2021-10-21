@@ -11,28 +11,6 @@ class OtherCommand(commands.Cog):
         self.client = client
 
     @commands.command()
-    async def help(self, ctx):
-        await ctx.send("Команда в переработке, ожидайте")
-
-    @commands.command()
-    async def info(self, ctx, type_of_info, *, value):
-        try:
-            if type_of_info in ['name', 'balance']:
-                raise TypeError(f"no such column: {type_of_info}")
-            curor.execute(f"UPDATE profile SET {type_of_info}='{value}' WHERE name = '{str(ctx.author.id)}'")
-            conn.commit()
-            emb = discord.Embed(title="Успешно выполнено", colour=discord.colour.Colour.green())
-            await ctx.send(embed=emb)
-        except Exception as e:
-            emb = discord.Embed(title="Проиошла ошибка", colour=discord.colour.Colour.red())
-            emb.add_field(name="Ошибка", value=str(e))
-            await ctx.send(embed=emb)
-
-    @commands.command()
-    async def ping(self, ctx):
-        await ctx.send("pong")
-
-    @commands.command()
     async def profile(ctx):
         bal = list(curor.execute("SELECT * FROM balance WHERE name=?", [(str(ctx.author.id))]))
         cookies = list(curor.execute("SELECT * FROM cookies WHERE name=?", [(str(ctx.author.id))]))
