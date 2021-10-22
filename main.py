@@ -4,7 +4,7 @@ import sqlite3
 from Cogs import config as c
 import os
 
-bot = commands.Bot(command_prefix=c.BotToken, intents=discord.Intents.all(), case_insensitive=True)
+bot = commands.Bot(command_prefix=c.BotPrefix, intents=discord.Intents.all(), case_insensitive=True)
 bot.remove_command("help")
 # slash = InteractionClient(bot)
 conn = sqlite3.connect("Cogs/mydb.db")
@@ -47,4 +47,4 @@ async def code(ctx, *, code: str):
         await ctx.send(e)
 
 
-bot.run(c.tocen)
+bot.run(c.token)
