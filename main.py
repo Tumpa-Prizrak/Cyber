@@ -1,10 +1,10 @@
 import discord
 from discord.ext import commands
 import sqlite3
-from Cogs import config as c
+from Cogs.reactions import config as c
 import os
 
-bot = commands.Bot(command_prefix=c.BotToken, intents=discord.Intents.all(), case_insensitive=True)
+bot = commands.Bot(command_prefix=c.prefix, intents=discord.Intents.all(), case_insensitive=True)
 bot.remove_command("help")
 # slash = InteractionClient(bot)
 conn = sqlite3.connect("Cogs/mydb.db")
@@ -21,7 +21,7 @@ for i in os.listdir("Cogs"):
 async def on_ready():
     await bot.change_presence(status=discord.Status.dnd, activity=discord.Streaming(name="!help",
             platform="Twitch",
-            details=f"{c.BotToken}help",
+            details=f"{c.prefix}help",
             game="Create bot",
             url="https://www.twitch.tv/andrew_k9"))
     print("Ready")

@@ -1,7 +1,7 @@
 import discord
 import sqlite3
 from discord.ext import commands
-conn = sqlite3.connect("mydb.db")
+conn = sqlite3.connect("../mydb.db")
 curor = conn.cursor()
 
 

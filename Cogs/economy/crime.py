@@ -4,7 +4,7 @@ import datetime
 from discord import colour
 from discord.ext import commands
 from random import randrange, randint
-conn = sqlite3.connect("mydb.db")
+conn = sqlite3.connect("../mydb.db")
 curor = conn.cursor()
 
 
