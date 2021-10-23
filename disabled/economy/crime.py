@@ -1,10 +1,11 @@
-import discord
+# Временно отключено
+"""import discord
 import sqlite3
 import datetime
 from discord import colour
 from discord.ext import commands
 from random import randrange, randint
-conn = sqlite3.connect("../mydb.db")
+conn = sqlite3.connect("Cogs/mysqldb.db")
 curor = conn.cursor()
 
 
@@ -53,3 +54,4 @@ class EconomyCommand(commands.Cog):
 
 def setup(client):
     client.add_cog(EconomyCommand(client))
+"""

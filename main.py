@@ -1,20 +1,30 @@
 import discord
 from discord.ext import commands
 import sqlite3
-from Cogs.reactions import config as c
+import config as c
 import os
 
 bot = commands.Bot(command_prefix=c.prefix, intents=discord.Intents.all(), case_insensitive=True)
 bot.remove_command("help")
 # slash = InteractionClient(bot)
-conn = sqlite3.connect("Cogs/mydb.db")
+conn = sqlite3.connect("Cogs/mysqldb.db")
 curor = conn.cursor()
+
+categories = []
 for i in os.listdir("Cogs"):
-    try:
-        if i.endswith(".py"):
-            bot.load_extension("Cogs." + i[:-3])
-    except discord.ext.commands.errors.NoEntryPointError:
+    if i.endswith(".db") or i.endswith(".py"):
         continue
+    else:
+        categories.append(i)
+
+for directory in categories:
+    for file in os.listdir("Cogs/" + directory):
+        try:
+            if f"{directory}/{file}".endswith(".py"):
+                bot.load_extension(f"Cogs.{directory}.{file[:-3]}")
+                print("Load cog: " + f"Cogs.{directory}.{file[:-3]}")
+        except discord.ext.commands.errors.NoEntryPointError:
+            continue
 
 
 @bot.event
@@ -47,4 +57,4 @@ async def code(ctx, *, code: str):
         await ctx.send(e)
 
 
-bot.run(c.tocen)
+bot.run(c.token)

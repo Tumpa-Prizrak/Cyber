@@ -1,7 +1,8 @@
-import discord
+# Временно отключено
+"""import discord
 import sqlite3
 from discord.ext import commands
-conn = sqlite3.connect("../mydb.db")
+conn = sqlite3.connect("../mysqldb.db")
 curor = conn.cursor()
 
 
@@ -27,3 +28,4 @@ class OtherCommand(commands.Cog):
 
 def setup(client):
     client.add_cog(OtherCommand(client))
+"""

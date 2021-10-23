@@ -1,7 +1,7 @@
 import discord
 import sqlite3
 from discord.ext import commands
-conn = sqlite3.connect("../mydb.db")
+conn = sqlite3.connect("Cogs/mysqldb.db")
 curor = conn.cursor()
 
 
@@ -11,7 +11,7 @@ class OtherCommand(commands.Cog):
         self.client = client
 
     @commands.command()
-    async def profile(ctx):
+    async def profile(self, ctx):
         bal = list(curor.execute("SELECT * FROM balance WHERE name=?", [(str(ctx.author.id))]))
         cookies = list(curor.execute("SELECT * FROM cookies WHERE name=?", [(str(ctx.author.id))]))
         emb = discord.Embed(title=f"Ваш профиль", color=discord.colour.Colour.dark_orange())
