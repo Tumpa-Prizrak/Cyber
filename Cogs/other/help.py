@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
 import os
-
+doc = """Помощь по боту"""
+syntax = "help [команда]"
 
 
 class OtherCommand(commands.Cog):
@@ -42,21 +43,21 @@ class OtherCommand(commands.Cog):
             await ctx.send(embed=emb)
         else:
             try:
-                comm = __import__(f"Cogs.moderation.{command}")
-            except ModuleNotFoundError:
-                try:
-                    comm = __import__(f"Cogs.other.{command}")
-                except ModuleNotFoundError:
-                    try:
-                        comm = __import__(f"Cogs.reactions.{command}")
-                    except ModuleNotFoundError:
-                        await ctx.send("Команда не найдена")
-                        raise ModuleNotFoundError
+                for i in os.listdir("Cogs"):
+                    if not i.endswith(".py") and not i.endswith(".db") and command + ".py" in os.listdir("Cogs\\" + i):
+                        comm = __import__(f"Cogs.{i}.{command}", fromlist=["doc", "syntax"])
 
-            emb = discord.Embed(title=f"Команда {command}", colour=discord.colour.Colour.green())
-            emb.add_field(name=comm.__doc__, value="Как-то так :)", inline=False)
+                        emb = discord.Embed(title=f"Команда {command}", colour=discord.colour.Colour.green())
+                        emb.add_field(name=str(comm.doc), value="Синтаксис: " + str(comm.syntax), inline=False)
 
-            await ctx.send(embed=emb)
+                        await ctx.send(embed=emb)
+
+                        raise TypeError
+                raise SyntaxError
+            except TypeError:
+                pass
+            except SyntaxError:
+                await ctx.send("Такой команды не существует")
 
 
 def setup(client):

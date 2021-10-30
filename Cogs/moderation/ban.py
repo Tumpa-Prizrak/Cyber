@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+doc = """Дать Фениксу в лапы Банхаммер и указать на человека"""
+syntax = "ban <Человек> [Причина]"
 
 
 class ModerationCommand(commands.Cog):

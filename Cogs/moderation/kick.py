@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+doc = """Выгнать человека с сервера"""
+syntax = "kick <Человек> [Причина]"
 
 
 class ModerationCommand(commands.Cog):

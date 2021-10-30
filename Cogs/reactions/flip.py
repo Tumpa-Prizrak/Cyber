@@ -4,6 +4,8 @@ import requests
 import json
 from random import randint
 import config as c
+doc = """Селать -100000 хп столу"""
+syntax = "flip"
 
 
 class ReactionsCommand(commands.Cog):

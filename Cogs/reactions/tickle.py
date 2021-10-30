@@ -4,6 +4,8 @@ import requests
 import json
 from random import randint
 import config as c
+doc = """Щекотать кого-то"""
+syntax = "tickle <Человек>"
 
 
 class ReactionsCommand(commands.Cog):

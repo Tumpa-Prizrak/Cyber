@@ -3,6 +3,8 @@ import sqlite3
 from discord.ext import commands
 conn = sqlite3.connect("Cogs/mysqldb.db")
 curor = conn.cursor()
+doc = """Получить информацию о профиле"""
+syntax = "profile"
 
 
 class OtherCommand(commands.Cog):

@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+doc = """Проверка состояния бота"""
+syntax = "ping"
 
 
 class OtherCommand(commands.Cog):
