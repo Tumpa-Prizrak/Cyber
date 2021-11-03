@@ -21,7 +21,7 @@ class OtherCommand(commands.Cog):
         if command == None:
             categories = []
             for i in os.listdir("Cogs"):
-                if i.endswith(".db") or i.endswith(".py") or i == '__pycache__':
+                if len(str.split(i, ".")) != 1 or i == '__pycache__':
                     continue
                 else:
                     categories.append(i)
@@ -44,7 +44,7 @@ class OtherCommand(commands.Cog):
         else:
             try:
                 for i in os.listdir("Cogs"):
-                    if not i.endswith(".py") and not i.endswith(".db") and command + ".py" in os.listdir("Cogs\\" + i):
+                    if command + ".py" in os.listdir("Cogs\\" + i):
                         comm = __import__(f"Cogs.{i}.{command}", fromlist=["doc", "syntax"])
 
                         emb = discord.Embed(title=f"Команда {command}", colour=discord.colour.Colour.green())

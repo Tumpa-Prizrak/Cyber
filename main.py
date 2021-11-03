@@ -21,7 +21,7 @@ curor = conn.cursor()
 # Load Cogs
 categories = []
 for i in os.listdir("Cogs"):
-    if i.endswith(".db") or i.endswith(".py"):
+    if len(str.split(i, ".")) != 1:
         continue
     else:
         categories.append(i)
@@ -79,10 +79,10 @@ async def __eval(ctx, *, content):
         "random": random,
         "requests": requests
     }
-    start = time.time() # import time, для расчёта времени выполнения
+    start = time.time()  # import time, для расчёта времени выполнения
     try:
-        r = await aeval.aeval(f"""{code}""", standard_args, {}) # выполняем код
-        ended = time.time() - start # рассчитываем конец выполнения
+        r = await aeval.aeval(f"""{code}""", standard_args, {})  # выполняем код
+        ended = time.time() - start  # рассчитываем конец выполнения
         if not code.startswith('#nooutput'):
             # Если код начинается с #nooutput, то вывода не будет
             embed = discord.Embed(title="Успешно!", description=f"Выполнено за: {ended}", color=0x99ff99)
