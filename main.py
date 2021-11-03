@@ -65,7 +65,6 @@ async def __eval(ctx, *, content):
         return await ctx.send("Кыш!")
     code = "\n".join(content.split("\n")[1:])[:-3] if content.startswith("```") and content.endswith("```") else content
     standard_args = {
-        # Стандартные библиотеки и переменные, которые будут определены в коде. Для удобства.
         "discord": discord,
         "commands": commands,
         "bot": bot,
@@ -84,7 +83,6 @@ async def __eval(ctx, *, content):
     try:
         r = await aeval.aeval(f"""{code}""", standard_args, {}) # выполняем код
         ended = time.time() - start # рассчитываем конец выполнения
-        print(r)
         if not code.startswith('#nooutput'):
             # Если код начинается с #nooutput, то вывода не будет
             embed = discord.Embed(title="Успешно!", description=f"Выполнено за: {ended}", color=0x99ff99)

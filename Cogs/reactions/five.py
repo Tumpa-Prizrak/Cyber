@@ -11,6 +11,9 @@ syntax = "five <Человек>"
 class ReactionsCommand(commands.Cog):
     def __init__(self, client):
         self.client = client
+        self.someShit = {
+            "person": "<Человек>"
+        }
 
     @commands.command()
     async def five(self, ctx, person: discord.Member):
@@ -31,6 +34,18 @@ class ReactionsCommand(commands.Cog):
         else:
             emb = discord.Embed(title=f"Произошла неожиданная ошибка. Код ошибки: {r.status_code}",
                                 colour=discord.colour.Colour.red())
+
+        await ctx.send(embed=emb)
+
+    @five.error
+    async def Some_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            try:
+                emb = discord.Embed(title=f"Параметр \"{self.someShit[error.param.name]}\" пропущен",
+                                    colour=discord.colour.Colour.red())
+            except KeyError:
+                emb = discord.Embed(title=f"Параметр \"{error.param.name}\" пропущен",
+                                    colour=discord.colour.Colour.red())
 
         await ctx.send(embed=emb)
 
