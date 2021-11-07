@@ -37,8 +37,8 @@ class ModerationCommand(commands.Cog):
             except KeyError:
                 emb = discord.Embed(title=f"Параметр \"{error.param.name}\" пропущен", colour=discord.colour.Colour.red())
                 await ctx.send(embed=emb)
-        else:
-            emb = discord.Embed(title=str(error), colour=discord.Colour.red())
+        elif isinstance(error, discord.Forbidden):
+            emb = discord.Embed(title="Я не могу это сделать :sob:")
             await ctx.send(embed=emb)
 
 
