@@ -18,6 +18,8 @@ class ReactionsCommand(commands.Cog):
     @commands.command()
     async def slap(self, ctx, person: discord.Member):
         if ctx.author == person:
+            emb = discord.Embed(title="Вы не можете сделать это с собой  :sob:", colour=discord.colour.Colour.red())
+            await ctx.send(embed=emb)
             return
 
         r = requests.get(f"https://g.tenor.com/v1/search?q=anime slap&key={c.apikey}&limit={str(c.limit)}")

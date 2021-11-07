@@ -18,6 +18,8 @@ class ReactionsCommand(commands.Cog):
     @commands.command()
     async def bite(self, ctx, person: discord.Member):
         if ctx.author == person:
+            emb = discord.Embed(title="Вы не можете сделать это с собой  :sob:", colour=discord.colour.Colour.red())
+            await ctx.send(embed=emb)
             return
 
         r = requests.get(f"https://g.tenor.com/v1/search?q=anime bite&key={c.apikey}&limit={str(c.limit)}")
@@ -46,8 +48,7 @@ class ReactionsCommand(commands.Cog):
             except KeyError:
                 emb = discord.Embed(title=f"Параметр \"{error.param.name}\" пропущен",
                                     colour=discord.colour.Colour.red())
-
-        await ctx.send(embed=emb)
+            await ctx.send(embed=emb)
 
 
 def setup(client):

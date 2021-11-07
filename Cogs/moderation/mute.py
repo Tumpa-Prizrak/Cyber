@@ -1,7 +1,10 @@
 import discord
 from discord.ext import commands
-doc = """Выгнать человека с сервера"""
-syntax = "kick <Человек> [Причина]"
+import sqlite3
+doc = """Замолчи!!!"""
+syntax = "mute <Человек> <Причина>"
+conn = sqlite3.connect("Cogs/mysqldb.db")
+curor = conn.cursor()
 
 
 class ModerationCommand(commands.Cog):
@@ -12,15 +15,17 @@ class ModerationCommand(commands.Cog):
         }
 
     @commands.command()
-    @commands.has_permissions(kick_members=True)
-    async def kick(self, ctx, man: discord.Member, *, reason: str = ""):
+    @commands.has_permissions(manage_roles=True)
+    async def mute(self, ctx, man: discord.Member):
         if ctx.author.top_role.position <= man.top_role.position and ctx.guild.owner != ctx.author:
             raise commands.MissingPermissions
-        await man.kick(reason=reason)
-        emb = discord.Embed(title=f"\"{man.display_name}\" Был кикнут", colour=discord.colour.Color.green())
-        await ctx.send(embed=emb)
+        curor.execute(f"INSERT INTO warns VALUES (?, ?)", (man.id, ctx.guild.id))
+        conn.commit()
+        embed = discord.Embed(title=f"\"{man.mention}\" был замьючен",
+                              colour=discord.colour.Color.green())
+        await ctx.send(embed=embed)
 
-    @kick.error
+    @mute.error
     async def Some_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             emb = discord.Embed(title="Бро, у тебя нет прав", colour=discord.colour.Colour.red())
@@ -32,6 +37,9 @@ class ModerationCommand(commands.Cog):
             except KeyError:
                 emb = discord.Embed(title=f"Параметр \"{error.param.name}\" пропущен", colour=discord.colour.Colour.red())
                 await ctx.send(embed=emb)
+        else:
+            emb = discord.Embed(title=str(error), colour=discord.Colour.red())
+            await ctx.send(embed=emb)
 
 
 def setup(client):

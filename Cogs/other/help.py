@@ -44,6 +44,9 @@ class OtherCommand(commands.Cog):
         else:
             try:
                 for i in os.listdir("Cogs"):
+                    if len(str.split(i, ".")) != 1:
+                        continue
+
                     if command + ".py" in os.listdir("Cogs\\" + i):
                         comm = __import__(f"Cogs.{i}.{command}", fromlist=["doc", "syntax"])
 

@@ -36,14 +36,8 @@ for directory in categories:
             continue
 
 
-for i in os.listdir("Cogs"):
-    try:
-        if i.endswith(".py") and not i.startswith("config."):
-            bot.load_extension(f"Cogs.{file[:-3]}")
-    except discord.ext.commands.errors.NoEntryPointError:
-        print(f"NoEntryPointError at Cog {file[:-3]}")
-    except Exception as e:
-        print(f"Error: \"{e}\" at Cog {file[:-3]}")
+bot.load_extension(f"Cogs.events")
+print("Load cog: Cogs.events")
 
 
 @bot.event

@@ -18,6 +18,8 @@ class ReactionsCommand(commands.Cog):
     @commands.command()
     async def cuddle(self, ctx, person: discord.Member):
         if ctx.author == person:
+            emb = discord.Embed(title="Вы не можете сделать это с собой  :sob:", colour=discord.colour.Colour.red())
+            await ctx.send(embed=emb)
             return
 
         r = requests.get(f"https://g.tenor.com/v1/search?q=anime cuddlele&key={c.apikey}&limit={str(c.limit)}")
@@ -34,8 +36,7 @@ class ReactionsCommand(commands.Cog):
         else:
             emb = discord.Embed(title=f"Произошла неожиданная ошибка. Код ошибки: {r.status_code}",
                                 colour=discord.colour.Colour.red())
-
-        await ctx.send(embed=emb)
+            await ctx.send(embed=emb)
 
     @cuddle.error
     async def Some_error(self, ctx, error):
