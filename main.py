@@ -98,5 +98,6 @@ async def __eval(ctx, *, content):
             await ctx.send(embed=embed)
             raise e
 
+# Призрак бака
 
 bot.run(c.token)
