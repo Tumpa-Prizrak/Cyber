@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Cyber",
+            "database": "${workspaceFolder:Cyber}/Cogs/mysqldb.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

@@ -11,7 +11,7 @@ class OtherCommand(commands.Cog):
 
     @commands.command()
     async def ping(self, ctx):
-        await ctx.send("pong! Задержка {} мс".format(str(round(self.client.latency * 1000))))
+        await ctx.send(f"pong! Задержка {round(self.client.latency * 1000)} мс")
 
 
 def setup(client):
