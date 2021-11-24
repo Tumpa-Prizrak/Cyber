@@ -11,7 +11,6 @@ class ModerationCommand(commands.Cog):
             "man": "<Человек>"
         }
         self.runame = 'Модерация'
-        self.db = client.db
 
     async def cog_command_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):

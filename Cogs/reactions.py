@@ -35,7 +35,7 @@ class ReactionsCommand(commands.Cog):
             if author == target:
                 return discord.Embed(title="Вы не можете сделать это с собой  :sob:", colour=discord.colour.Colour.red())
         if not isinstance(r, int):
-            return discord.Embed(title=f"{author.name} {action} {target.name if target is not None else '\b'}",
+            return discord.Embed(title=f"{author.name} {action} {target.name if target is not None else ''}",
                                 colour=discord.colour.Colour.green()).set_image(url=r)
         else:
             return discord.Embed(title=f"Произошла неожиданная ошибка. Код ошибки: {r}",
