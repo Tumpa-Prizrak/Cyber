@@ -5,54 +5,55 @@ import datetime
 import os
 import random
 import requests
-from motor.motor_asyncio import AsyncIOMotorClient# import sqlite3
+import sqlite3
 import sys
 import time
 import discord
 from discord.ext import commands, tasks
 import config as c
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(c.prefix), intents=discord.Intents.all(), case_insensitive=True)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(c.prefix), intents=discord.Intents.all(),
+                   case_insensitive=True)
 bot.remove_command("help")
 # slash = InteractionClient(bot)
-# conn = sqlite3.connect("Cogs/mysqldb.db")
-# curor = conn.cursor()
-db = AsyncIOMotorClient('db')
-bot.db = db
+conn = sqlite3.connect("Cogs/mysqldb.db")
+curor = conn.cursor()
 # Load Cogs
-categories = [i for i in os.listdir("Cogs") if os.path.isdir('Cogs/'+i)]
+categories = [i for i in os.listdir("Cogs") if os.path.isdir('Cogs/' + i)]
 for directory in categories:
     if directory == '__pycache__': continue
     for file in os.listdir("Cogs/" + directory):
         try:
-            if os.path.isfile('Cogs/'+directory+'/'+file) and file.endswith(".py"):
+            if os.path.isfile('Cogs/' + directory + '/' + file) and file.endswith(".py"):
                 bot.load_extension(f"Cogs.{directory}.{file[:-3]}")
                 print("Load cog: " + f"Cogs.{directory}.{file[:-3]}")
-        except commands.errors.NoEntryPointError: continue
+        except commands.errors.NoEntryPointError:
+            continue
 for i in os.listdir("Cogs/"):
     try:
         if i.endswith(".py"):
             bot.load_extension(f"Cogs.{i[:-3]}")
             print(f"Load cog: Cogs.{i[:-3]}")
-    except commands.errors.NoEntryPointError: pass
-
+    except commands.errors.NoEntryPointError:
+        pass
 
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(status=discord.Status.dnd, activity=discord.Activity(type=discord.ActivityType.watching, name='на тест чужого бота'
-            # activity=discord.Streaming(
-            # name="!help",
-            # platform="Twitch",
-            # details=f"{c.prefix}help",
-            # game="Create bot",
-            # url="https://www.twitch.tv/andrew_k9"
-                )
-            )
+    await bot.change_presence(
+        activity=discord.Streaming(
+            name="!help",
+            platform="Twitch",
+            details=f"{c.prefix}help",
+            game="Create bot",
+            url="https://www.twitch.tv/andrew_k9"
+        )
+    )
     print("Ready")
 
 
-minify_text = lambda txt: f'{txt[:-900]}...\n# ...и ещё {len(txt.replace(txt[:-900], ""))} символов' if len(txt) >= 1024 else txt
+minify_text = lambda txt: f'{txt[:-900]}...\n# ...и ещё {len(txt.replace(txt[:-900], ""))} символов' if len(
+    txt) >= 1024 else txt
 
 
 @bot.command(aliases=['eval', 'aeval', 'evaulate', 'выполнить', 'exec', 'execute', 'code'])
@@ -100,7 +101,8 @@ async def __eval(ctx, *, content):
             await ctx.send(embed=embed)
             raise e
 
-# Призрак бака
 
-# bot.run(c.token)
-bot.run('ODUzMjM4NTc4MzU1NjM0MjA2.YMSeWQ.2KkONxZdcQP0OA17eRb6PKHzBxg')
+# Призрак бака
+# Мы не будем удалять комментарий выше :D
+
+bot.run(c.token)
