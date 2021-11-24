@@ -5,7 +5,7 @@ import datetime
 import os
 import random
 import requests
-import sqlite3
+from motor.motor_asyncio import AsyncIOMotorClient# import sqlite3
 import sys
 import time
 import discord
@@ -15,38 +15,40 @@ import config as c
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(c.prefix), intents=discord.Intents.all(), case_insensitive=True)
 bot.remove_command("help")
 # slash = InteractionClient(bot)
-conn = sqlite3.connect("Cogs/mysqldb.db")
-curor = conn.cursor()
-
+# conn = sqlite3.connect("Cogs/mysqldb.db")
+# curor = conn.cursor()
+db = AsyncIOMotorClient('db')
+bot.db = db
 # Load Cogs
-categories = []
-for i in os.listdir("Cogs"):
-    if len(str.split(i, ".")) != 1:
-        continue
-    else:
-        categories.append(i)
-
+categories = [i for i in os.listdir("Cogs") if os.path.isdir('Cogs/'+i)]
 for directory in categories:
+    if directory == '__pycache__': continue
     for file in os.listdir("Cogs/" + directory):
         try:
-            if f"{directory}/{file}".endswith(".py"):
+            if os.path.isfile('Cogs/'+directory+'/'+file) and file.endswith(".py"):
                 bot.load_extension(f"Cogs.{directory}.{file[:-3]}")
                 print("Load cog: " + f"Cogs.{directory}.{file[:-3]}")
-        except discord.ext.commands.errors.NoEntryPointError:
-            continue
+        except commands.errors.NoEntryPointError: continue
+for i in os.listdir("Cogs/"):
+    try:
+        if i.endswith(".py"):
+            bot.load_extension(f"Cogs.{i[:-3]}")
+            print(f"Load cog: Cogs.{i[:-3]}")
+    except commands.errors.NoEntryPointError: pass
 
-
-bot.load_extension(f"Cogs.events")
-print("Load cog: Cogs.events")
 
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(status=discord.Status.dnd, activity=discord.Streaming(name="!help",
-            platform="Twitch",
-            details=f"{c.prefix}help",
-            game="Create bot",
-            url="https://www.twitch.tv/andrew_k9"))
+    await bot.change_presence(status=discord.Status.dnd, activity=discord.Activity(type=discord.ActivityType.watching, name='на тест чужого бота'
+            # activity=discord.Streaming(
+            # name="!help",
+            # platform="Twitch",
+            # details=f"{c.prefix}help",
+            # game="Create bot",
+            # url="https://www.twitch.tv/andrew_k9"
+                )
+            )
     print("Ready")
 
 
@@ -100,4 +102,5 @@ async def __eval(ctx, *, content):
 
 # Призрак бака
 
-bot.run(c.token)
+# bot.run(c.token)
+bot.run('ODUzMjM4NTc4MzU1NjM0MjA2.YMSeWQ.2KkONxZdcQP0OA17eRb6PKHzBxg')
