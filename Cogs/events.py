@@ -8,6 +8,7 @@ curor = conn.cursor()
 class Events(commands.Cog):
     def __init__(self, client):
         self.client = client
+        self.invisible = True
 
     @commands.Cog.listener()
     async def on_message(self, mess):
