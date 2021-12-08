@@ -6,6 +6,7 @@ class OtherCommand(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.runame = 'Остальное'
+        self.invisible = False
 
     @commands.command()
     async def help(self, ctx, *, cmd_input = None):
@@ -13,9 +14,10 @@ class OtherCommand(commands.Cog):
             emb = discord.Embed(title="Команды:", colour=discord.colour.Colour.green())
             emb.set_footer(text=f"Можешь прописать {ctx.prefix}help <команда>, чтобы узнать больше про нужную команду :)",
                                         icon_url="https://cdn.discordapp.com/attachments/880063679570259969/897478783215476826/0c5aa927105c867558d290d6a1f3f72f.webp")
-            for cog in self.client.cogs:
+            for cog in self.client.cogs.values():
                 if not getattr(cog, 'invisible'):
-                    emb.add_field(name=f'**{cog.runame}:**', value=" ".join(f'`{i.name}`' for i in cog.get_commands()))
+                    emb.add_field(name=f'**{cog.runame}:**', value=" ".join(f'`{i.name}`' for i in cog.get_commands()),
+                                  inline=False)
         else:
             for cmd in self.client.commands:
                 if cmd.name == cmd_input:
@@ -30,7 +32,7 @@ class OtherCommand(commands.Cog):
         await ctx.send(f"Понг! Задержка {round(self.client.latency * 1000)} мс")
 
     @commands.command(usage = 'profile', brief = 'Показывает ваш профиль')
-    async def profile(self, ctx, person):
+    async def profile(self, ctx, person: discord.Member = None):
         emb = discord.Embed(title="Ваш профиль" if person == None else f"Профиль {person.display_name}", color=discord.colour.Colour.dark_orange())
         if person == None:
             person = ctx.author

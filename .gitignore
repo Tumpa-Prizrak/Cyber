@@ -4,3 +4,4 @@ __pycache__/
 RouC/
 test.py
 *.db-journal
+.vscode/
