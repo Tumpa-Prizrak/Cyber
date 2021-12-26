@@ -8,11 +8,11 @@ import requests
 import sqlite3
 import sys
 import time
-import discord
-from discord.ext import commands, tasks
+import nextcord
+from nextcord.ext import commands, tasks
 import config as c
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(c.prefix), intents=discord.Intents.all(),
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(c.prefix), intents=nextcord.Intents.all(),
                    case_insensitive=True)
 bot.remove_command("help")
 # slash = InteractionClient(bot)
@@ -41,7 +41,7 @@ for i in os.listdir("Cogs/"):
 @bot.event
 async def on_ready():
     await bot.change_presence(
-        activity=discord.Streaming(
+        activity=nextcord.Streaming(
             name="!help",
             platform="Twitch",
             details=f"{c.prefix}help",
@@ -62,7 +62,8 @@ async def __eval(ctx, *, content):
         return await ctx.send("Кыш!")
     code = "\n".join(content.split("\n")[1:])[:-3] if content.startswith("```") and content.endswith("```") else content
     standard_args = {
-        "discord": discord,
+        "nextcord": nextcord,
+        "discord": nextcord,
         "commands": commands,
         "bot": bot,
         "tasks": tasks,
@@ -82,7 +83,7 @@ async def __eval(ctx, *, content):
         ended = time.time() - start  # рассчитываем конец выполнения
         if not code.startswith('#nooutput'):
             # Если код начинается с #nooutput, то вывода не будет
-            embed = discord.Embed(title="Успешно!", description=f"Выполнено за: {ended}", color=0x99ff99)
+            embed = nextcord.Embed(title="Успешно!", description=f"Выполнено за: {ended}", color=0x99ff99)
             """
              Есть нюанс: если входные/выходные данные будут длиннее 1024 символов, то эмбед не отправится, а функция выдаст ошибку.
              Именно поэтому сверху стоит print(r), а так же есть функция minify_text, которая
@@ -95,7 +96,7 @@ async def __eval(ctx, *, content):
         ended = time.time() - start
         if not code.startswith('#nooutput'):
             code = minify_text(str(code))
-            embed = discord.Embed(title=f"При выполнении возникла ошибка.\nВремя: {ended}",
+            embed = nextcord.Embed(title=f"При выполнении возникла ошибка.\nВремя: {ended}",
                                   description=f'Ошибка:\n```py\n{e}```', color=0xff0000)
             embed.add_field(name=f'Входные данные:', value=f'`{minify_text(str(code))}`', inline=False)
             await ctx.send(embed=embed)
