@@ -1,5 +1,6 @@
 import nextcord
 from nextcord.ext import commands
+
 doc = """Дать Фениксу в лапы Банхаммер и указать на человека"""
 syntax = "ban <Человек> [Причина]"
 

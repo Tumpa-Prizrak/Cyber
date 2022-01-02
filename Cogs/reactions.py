@@ -3,9 +3,10 @@ from nextcord.ext import commands
 import aiohttp
 import ujson
 from random import randint
-import config as c
 import typing
+from Cogs.helper import *
 
+c = params("config.json")
 
 class ReactionsCommand(commands.Cog):
     def __init__(self, client):
@@ -45,7 +46,11 @@ class ReactionsCommand(commands.Cog):
                 return nextcord.Embed(title="Вы не можете сделать это с собой  :sob:",
                                      colour=nextcord.colour.Colour.red())
         if not isinstance(r, int):
-            return nextcord.Embed(title=f"{author.name} {action} {target.name if target is not None else ''}",
+            if type(target) == str:
+                return nextcord.Embed(title=f"{author.name} {action} {target}",
+                                 colour=nextcord.colour.Colour.green()).set_image(url=r)
+            else:
+                return nextcord.Embed(title=f"{author.name} {action} {target.name if target is not None else ''}",
                                  colour=nextcord.colour.Colour.green()).set_image(url=r)
         else:
             return nextcord.Embed(title=f"Произошла неожиданная ошибка. Код ошибки: {r}",

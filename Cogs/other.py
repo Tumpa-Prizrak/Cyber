@@ -31,12 +31,12 @@ class OtherCommand(commands.Cog):
         await ctx.send(f"Понг! Задержка {round(self.client.latency * 1000)} мс")
 
     @commands.command(usage = 'profile', brief = 'Показывает ваш профиль')
-    async def profile(self, ctx, person: nextcord.Member = None):
-        emb = nextcord.Embed(title="Ваш профиль" if person == None else f"Профиль {person.display_name}", color=nextcord.colour.Colour.dark_orange())
+    async def profile(self, ctx: commands.Context, person: nextcord.Member = None):
         if person == None:
             person = ctx.author
+        emb = nextcord.Embed(title="Ваш профиль" if person == None else f"Профиль {person.display_name}", color=person.top_role.colour)
         emb.set_author(name=str(person))
-        emb.set_thumbnail(url=person.avatar_url)
+        emb.set_thumbnail(url=person.avatar)
         emb.add_field(name=f"Статус", value=str(person.status), inline=False)
         # emb.add_field(name=f"Кастомный статус", value=str(person.custom_status), inline=False)
         emb.add_field(name=f"Активность", value=str(person.activity), inline=False)

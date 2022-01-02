@@ -1,17 +1,8 @@
-import aeval
-import aiohttp
-import asyncio
-import datetime
-import os
-import random
-import requests
-import sqlite3
-import sys
-import time
-import nextcord
+import nextcord, time, sys, sqlite3, requests, random, os, datetime, asyncio, aiohttp, aeval, json
 from nextcord.ext import commands, tasks
-import config as c
+from Cogs.helper import *
 
+c = params("config.json")
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(c.prefix), intents=nextcord.Intents.all(),
                    case_insensitive=True)
 bot.remove_command("help")
