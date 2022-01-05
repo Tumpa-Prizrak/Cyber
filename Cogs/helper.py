@@ -1,4 +1,5 @@
 import json
+import nextcord
 
 class params:
     def __init__(self, filename: str) -> None:
@@ -8,3 +9,5 @@ class params:
         self.owners = g['owners']
         self.apikey = g['apikey']
         self.limit = g['limit']
+
+def embed_builder(title: str, *, desc: str = None, color: nextcord.Colour = nextcord.Colour.green()): return nextcord.Embed(title=title, description=desc, color=color)

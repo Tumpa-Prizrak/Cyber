@@ -1,4 +1,4 @@
-import nextcord, time, sys, sqlite3, requests, random, os, datetime, asyncio, aiohttp, aeval, json
+import nextcord, time, sys, sqlite3, requests, random, os, datetime, asyncio, aiohttp, aeval
 from nextcord.ext import commands, tasks
 from Cogs.helper import *
 
@@ -85,13 +85,12 @@ async def __eval(ctx, *, content):
             await ctx.send(embed=embed)
     except Exception as e:
         ended = time.time() - start
-        if not code.startswith('#nooutput'):
-            code = minify_text(str(code))
-            embed = nextcord.Embed(title=f"При выполнении возникла ошибка.\nВремя: {ended}",
+        code = minify_text(str(code))
+        embed = nextcord.Embed(title=f"При выполнении возникла ошибка.\nВремя: {ended}",
                                   description=f'Ошибка:\n```py\n{e}```', color=0xff0000)
-            embed.add_field(name=f'Входные данные:', value=f'`{minify_text(str(code))}`', inline=False)
-            await ctx.send(embed=embed)
-            raise e
+        embed.add_field(name=f'Входные данные:', value=f'`{minify_text(str(code))}`', inline=False)
+        await ctx.send(embed=embed)
+        raise e
 
 
 # Призрак бака

@@ -134,7 +134,7 @@ class ReactionsCommand(commands.Cog):
         emb = await self.build_embed(r, ctx.author, 'обнял(а)', person)
         await ctx.send(embed=emb)
 
-    @commands.command(usage='innocent', brief='Я точно не импостер, не, ну серьёзно :D')
+    @commands.command(usage='innocent', brief='Я точно не импостер, не, ну серьёзно :D') #Брон молодец
     async def innocent(self, ctx):
         r = await self.get_gif('anime innocent')
         emb = await self.build_embed(r, ctx.author, 'оправдывается')

@@ -1,5 +1,7 @@
 import nextcord
 from nextcord.ext import commands
+from nextcord.utils import _IS_ASCII
+from Cogs.helper import *
 
 class OtherCommand(commands.Cog):
     def __init__(self, client):
@@ -49,6 +51,50 @@ class OtherCommand(commands.Cog):
                       inline=False)
         emb.add_field(name="Высшая роль", value=person.top_role, inline=False)
         await ctx.send(embed=emb)
+    
+    """@commands.command(usage = 'vote <Текст> <Вариант1> [Вариант2] ... [Вариант20]', brief = 'Начинает голосование')
+    async def vote(self, ctx: commands.Context, text, *, variants):
+        if len(variants) > 20:
+            return embed_builder("Слишком много аргументов!", desc="Макимальное кол-во аргументов: 20", color=nextcord.Colour.red())
+        emojis = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟', '🔴', '🟠', '🟡', '🟢', '🔵', '🟣', '🟤', '🔶', "🔷"]
+        conter = dict()
+        voited = [ctx.author.id]
+        for i in emojis[:len(variants) + 1]:
+            conter.update({str(i): 0})
+        
+        desc = ""
+        desc += "*Тема*" + "\n" + text + "\n"
+        desc += "*Варианты*\n"
+        
+        a = 0
+        for i in conter.keys():
+            desc += f"{i}|{variants[a]}" + "\n"
+            a += 1
+        del a
+
+        def if_already(_, user):
+            return not user in voited
+        
+        updated_text = f"Текущий статус ({len(voited)} проголосовавших)\n"
+        for i in conter.keys():
+            updated_text += f"{i}|[{conter[i]}]\n"
+        
+        updated_text += f"{ctx.author.mention}: чтобы закончить голосование нажмите на красную кнопку"
+        emb = embed_builder("🗳️ Опросник", desc=desc + updated_text)
+        mess = await ctx.send(embed=emb)
+
+        while True:
+            del emb, updated_text
+            emoj, pers = self.client.wait_for('reaction_add', check=if_already)
+            voited.append(pers.id)
+            conter[str(emoj.emoji)] += 1
+            updated_text = f"Текущий статус ({len(voited)} проголосовавших)\n"
+            for i in conter.keys():
+                updated_text += f"{i}|[{conter[i]}]\n"
+        
+            updated_text += f"{ctx.author.mention}: чтобы закончить голосование нажмите на красную кнопку"
+            emb = embed_builder("🗳️ Опросник", desc=desc + updated_text)
+            await mess.edit(embed=emb)"""
 
 def setup(client):
     client.add_cog(OtherCommand(client))
